@@ -1,0 +1,19 @@
+.not-found-container {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ min-height: 80vh;
+ font-family: "Arial", sans-serif;
+}
+
+.error-message {
+ font-size: 4rem;
+ color: #000080;
+ margin-bottom: 1rem;
+}
+
+.error-text {
+ font-size: 1.5rem;
+ color: #000080;
+}

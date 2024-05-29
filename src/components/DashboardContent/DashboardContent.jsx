@@ -12,8 +12,8 @@ function DashboardContent() {
     <div className="columnsWrapper">
      <ProductsProvider>
       <ProductsList />
+      <ShopingList />
      </ProductsProvider>
-     <ShopingList />
     </div>
    </div>
   </>

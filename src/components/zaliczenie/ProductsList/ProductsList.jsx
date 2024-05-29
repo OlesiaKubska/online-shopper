@@ -1,16 +1,26 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { ProductsContext } from "../../../context/productsContext";
 import LinearProgress from "@mui/material/LinearProgress";
 import "../commonStyles.css";
 
 const ProductsList = () => {
- const { products, fetchProducts } = useContext(ProductsContext);
+ const { products, fetchProducts, addProductToShoppingList } =
+  useContext(ProductsContext);
  const [loading, setLoading] = useState(false);
+
+ useEffect(() => {
+  fetchProducts();
+ }, [fetchProducts]);
 
  const handleLoadProducts = async () => {
   setLoading(true);
   await fetchProducts();
   setLoading(false);
+ };
+
+ const handleAddToShoppingList = (product) => {
+  setLoading(true);
+  addProductToShoppingList(product).then(() => setLoading(false));
  };
 
  return (
@@ -21,7 +31,9 @@ const ProductsList = () => {
     {loading && <LinearProgress />}
     <ul>
      {products.map((product, index) => (
-      <li key={index}>{product.name}</li>
+      <li key={index} onClick={() => handleAddToShoppingList(product)}>
+       {product.name}
+      </li>
      ))}
     </ul>
    </header>
