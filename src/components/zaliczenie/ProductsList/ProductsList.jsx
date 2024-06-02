@@ -1,41 +1,64 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { ProductsContext } from "../../../context/productsContext";
 import LinearProgress from "@mui/material/LinearProgress";
+import axios from "axios";
 import "../commonStyles.css";
 
 const ProductsList = () => {
- const { products, fetchProducts, addProductToShoppingList } =
-  useContext(ProductsContext);
- const [loading, setLoading] = useState(false);
+ const {
+  filteredProductsList,
+  setProductsList,
+  setFilteredProductsList,
+  setShoppingList,
+ } = useContext(ProductsContext);
+ const [loading, setLoading] = useState("initial");
 
- useEffect(() => {
-  fetchProducts();
- }, [fetchProducts]);
-
- const handleLoadProducts = async () => {
-  setLoading(true);
-  await fetchProducts();
-  setLoading(false);
+ const loadProductsListFromApi = async () => {
+  try {
+   setProductsList([]);
+   setFilteredProductsList([]);
+   setLoading("loading");
+   const productsFromApi = await axios.get(
+    "http://localhost:4000/api/productsList"
+   );
+   //    console.log("API response:", productsFromApi);
+   setLoading("loaded");
+   setProductsList(productsFromApi.data);
+   setFilteredProductsList(productsFromApi.data);
+  } catch (error) {
+   setLoading("error");
+   console.error("Error fetching products");
+  }
  };
 
- const handleAddToShoppingList = (product) => {
-  setLoading(true);
-  addProductToShoppingList(product).then(() => setLoading(false));
+ const addProductToShoppingList = async (product) => {
+  try {
+   await axios.post("http://localhost:4000/api/shoppingList", product);
+   setShoppingList((prevList) => [...prevList, product]);
+  } catch (error) {
+   console.error("Error adding product to shopping list:", error);
+  }
  };
 
  return (
   <div className="App">
    <header className="AppHeader">
     <p>Products list</p>
-    <button onClick={handleLoadProducts}>Load</button>
-    {loading && <LinearProgress />}
-    <ul>
-     {products.map((product, index) => (
-      <li key={index} onClick={() => handleAddToShoppingList(product)}>
-       {product.name}
-      </li>
-     ))}
-    </ul>
+    <button onClick={loadProductsListFromApi}>Load</button>
+    {loading === "loading" ? (
+     <p>
+      <LinearProgress />
+     </p>
+    ) : (
+     <ul>
+      {filteredProductsList &&
+       filteredProductsList.map((product) => (
+        <li key={product.id} onClick={() => addProductToShoppingList(product)}>
+         {product.name}
+        </li>
+       ))}
+     </ul>
+    )}
    </header>
   </div>
  );

@@ -5,11 +5,14 @@ import AppWrapper from "./components/AppWrapper/AppWrapper";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Content from "./components/Content/Content";
+import { ProductsProvider } from "./context/productsContext";
 
 function App() {
  return (
   <AppWrapper>
-   <Header />
+   <ProductsProvider>
+    <Header />
+   </ProductsProvider>
    <Content>
     <Outlet />
    </Content>

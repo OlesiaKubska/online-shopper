@@ -8,7 +8,9 @@ function DashboardContent() {
  return (
   <>
    <div className="appWrapper">
-    <ProductsFilters />
+    <ProductsProvider>
+     <ProductsFilters />
+    </ProductsProvider>
     <div className="columnsWrapper">
      <ProductsProvider>
       <ProductsList />
