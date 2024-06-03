@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 
 const ProductsContext = createContext();
 
@@ -6,18 +6,39 @@ const ProductsProvider = ({ children }) => {
  const [productsList, setProductsList] = useState([]);
  const [shoppingList, setShoppingList] = useState([]);
  const [filteredProductsList, setFilteredProductsList] = useState([]);
+ const [categories, setCategories] = useState([]);
 
- const filterProducts = (filter) => {
-  if (!filter) {
-   setFilteredProductsList(productsList);
-  } else {
-   setFilteredProductsList(
-    productsList.filter((product) =>
-     product.name.toLowerCase().includes(filter.toLowerCase())
-    )
-   );
-  }
- };
+ useEffect(() => {
+  const uniqueCategories = [
+   ...new Set(productsList.map((product) => product.category)),
+  ];
+  setCategories(uniqueCategories);
+ }, [productsList]);
+
+ const filterProducts = useCallback(
+  (filters) => {
+   let filteredList = productsList;
+
+   if (filters.name) {
+    filteredList = filteredList.filter((product) =>
+     product.name.toLowerCase().includes(filters.name.toLowerCase())
+    );
+   }
+
+   if (filters.category) {
+    filteredList = filteredList.filter(
+     (product) => product.category === filters.category
+    );
+   }
+
+   if (filters.isFoodOnly) {
+    filteredList = filteredList.filter((product) => product.isFood);
+   }
+
+   setFilteredProductsList(filteredList);
+  },
+  [productsList]
+ );
 
  return (
   <ProductsContext.Provider
@@ -29,6 +50,7 @@ const ProductsProvider = ({ children }) => {
     filteredProductsList,
     setFilteredProductsList,
     filterProducts,
+    categories,
    }}
   >
    {children}
