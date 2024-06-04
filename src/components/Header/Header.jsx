@@ -1,36 +1,23 @@
-// import { useState, useContext } from "react";
-// import { ProductsContext } from "../../context/productsContext";
+import { NavLink } from "react-router-dom";
+import Paragraph from "../Paragraph/Paragraph";
 import "./Header.css";
 
 const Header = () => {
- //  const { filterProducts } = useContext(ProductsContext);
- //  const [filter, setFilter] = useState("");
-
- //  const handleFilterChange = (e) => {
- //   const value = e.target.value;
- //   setFilter(value);
- //   filterProducts(value);
- //  };
-
+ const userName = JSON.parse(localStorage.getItem("user"))?.username;
  return (
   <div
    style={{
-    height: "100px", // wysokość
-    width: "100%", // szerokość 100%
-    backgroundColor: "#f8d7da", // kolor tła
-    display: "flex", // flexbox
-    justifyContent: "center", // wyśrodkowanie w poziomie
-    alignItems: "center", // wyśrodkowanie w pionie
-    gap: "100px", // odstęp między elementami
+    height: "100px",
+    width: "100%",
+    backgroundColor: "#f8d7da",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "100px",
    }}
   >
-   Header
-   {/* <input
-    type="text"
-    value={filter}
-    onChange={handleFilterChange}
-    placeholder="Filter products"
-   /> */}
+   <Paragraph paragraphText={`Hi, ${userName}`} />
+   <NavLink to="/signIn">Log out</NavLink>
   </div>
  );
 };
