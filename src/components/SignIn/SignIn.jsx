@@ -20,7 +20,7 @@ const SignIn = () => {
  };
 
  return (
-  <form onSubmit={handleSignIn}>
+  <form className="SignIn" onSubmit={handleSignIn}>
    <label>
     Username:
     <input
