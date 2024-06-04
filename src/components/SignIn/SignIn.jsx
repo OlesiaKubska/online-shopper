@@ -1,44 +1,53 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import "./SignIn.css";
 
 const SignIn = () => {
  const navigate = useNavigate();
- const [username, setUsername] = useState("");
- const [password, setPassword] = useState("");
 
- const handleSignIn = (event) => {
-  event.preventDefault();
+ const initialValues = {
+  username: "",
+  password: "",
+ };
+
+ const validationSchema = Yup.object({
+  username: Yup.string().required("Username is required"),
+  password: Yup.string().required("Password is required"),
+ });
+
+ const handleSignIn = (values) => {
   const user = {
-   username: username,
-   password: password,
+   username: values.username,
+   password: values.password,
   };
-  // Here you can add authentication logic
-  console.log("user", user);
+
   localStorage.setItem("user", JSON.stringify(user));
   navigate("/dashboard");
  };
 
  return (
-  <form className="SignIn" onSubmit={handleSignIn}>
-   <label>
-    Username:
-    <input
-     type="text"
-     value={username}
-     onChange={(e) => setUsername(e.target.value)}
-    />
-   </label>
-   <label>
-    Password:
-    <input
-     type="password"
-     value={password}
-     onChange={(e) => setPassword(e.target.value)}
-    />
-   </label>
-   <button type="submit">Sign in</button>
-  </form>
+  <div className="SignIn">
+   <Formik
+    initialValues={initialValues}
+    validationSchema={validationSchema}
+    onSubmit={handleSignIn}
+   >
+    <Form>
+     <div className="form-group">
+      <label htmlFor="username">Username:</label>
+      <Field name="username" type="text" autoComplete="username" />
+      <ErrorMessage name="username" component="div" className="error" />
+     </div>
+     <div className="form-group">
+      <label htmlFor="password">Password:</label>
+      <Field name="password" type="password" autoComplete="current-password" />
+      <ErrorMessage name="password" component="div" className="error" />
+     </div>
+     <button type="submit">Sign in</button>
+    </Form>
+   </Formik>
+  </div>
  );
 };
 

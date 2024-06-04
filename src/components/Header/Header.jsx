@@ -1,9 +1,17 @@
-import { NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import Paragraph from "../Paragraph/Paragraph";
 import "./Header.css";
 
 const Header = () => {
- const userName = JSON.parse(localStorage.getItem("user"))?.username;
+ const navigate = useNavigate();
+ const user = JSON.parse(localStorage.getItem("user"));
+ const userName = user?.username;
+
+ const handleLogout = () => {
+  localStorage.removeItem("user");
+  navigate("/signIn");
+ };
+
  return (
   <div
    style={{
@@ -16,8 +24,14 @@ const Header = () => {
     gap: "100px",
    }}
   >
-   <Paragraph paragraphText={`Hi, ${userName}`} />
-   <NavLink to="/signIn">Log out</NavLink>
+   {userName ? (
+    <>
+     <Paragraph paragraphText={`Hi, ${userName}`} />
+     <button onClick={handleLogout}>Log out</button>
+    </>
+   ) : (
+    <NavLink to="/signIn">Sign In</NavLink>
+   )}
   </div>
  );
 };
