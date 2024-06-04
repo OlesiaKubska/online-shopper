@@ -8,14 +8,10 @@ function DashboardContent() {
  return (
   <ProductsProvider>
    <div className="appWrapper">
-    {/* <ProductsProvider> */}
     <ProductsFilters />
-    {/* </ProductsProvider> */}
     <div className="columnsWrapper">
-     {/* <ProductsProvider> */}
      <ProductsList />
      <ShopingList />
-     {/* </ProductsProvider> */}
     </div>
    </div>
   </ProductsProvider>

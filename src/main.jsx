@@ -11,6 +11,7 @@ import "./index.css";
 import DashboardContent from "./components/DashboardContent/DashboardContent.jsx";
 import { useEffect } from "react";
 import NotFound from "./components/NotFound/NotFound.jsx";
+import Login from "./components/Login/Login.jsx";
 
 // eslint-disable-next-line react-refresh/only-export-components
 const RedirectToDashboard = () => {
@@ -37,6 +38,10 @@ const router = createBrowserRouter(
      element: <DashboardContent />,
     },
    ],
+  },
+  {
+   path: "/login",
+   element: <Login />,
   },
   {
    path: "*",
