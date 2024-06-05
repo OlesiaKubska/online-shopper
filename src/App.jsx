@@ -14,7 +14,7 @@ function App() {
     <Outlet />
    </Content>
    <Footer>
-    <Paragraph paragraphText="Zadanie zaliczeniowe - sem 2" />
+    <Paragraph paragraphText="Task completed by Olesia Kubska" />
    </Footer>
   </AppWrapper>
  );
