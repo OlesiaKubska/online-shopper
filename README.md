@@ -111,6 +111,7 @@ The application is deployed using GitHub Pages. To deploy, run:
 
 ```bash
 npm run deploy
+ ```
 
 Ensure that the base property in vite.config.js and homepage property in package.json are correctly set to the repository name.
 
