@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import NotFound from "./components/NotFound/NotFound.jsx";
 import SignIn from "./components/SignIn/SignIn.jsx";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute.jsx";
+import SignOut from "./components/SignOut/SignOut.jsx";
 
 // eslint-disable-next-line react-refresh/only-export-components
 const RedirectToDashboard = () => {
@@ -44,7 +45,10 @@ const router = createBrowserRouter(
    path: "/signIn",
    element: <SignIn />,
   },
-
+  {
+   path: "/signOut",
+   element: <SignOut />,
+  },
   {
    path: "*",
    element: <NotFound />,
