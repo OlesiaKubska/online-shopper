@@ -117,7 +117,8 @@ Ensure that the base property in vite.config.js and homepage property in package
 
 ## Authors and Acknowledgments
 
-# Author: Olesia Kubska
-# Acknowledgments: This project was developed as part of the coursework for the second semester, integrating knowledge from various topics covered during the semester.
+### Author: Olesia Kubska
+### Acknowledgments: 
+This project was developed as part of the coursework for the second semester, integrating knowledge from various topics covered during the semester.
 
 This README provides a comprehensive overview of the Online Shopper project, detailing its features, installation steps, and usage. It is structured to be informative for potential employers or collaborators reviewing your project on GitHub.
