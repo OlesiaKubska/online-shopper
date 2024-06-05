@@ -115,8 +115,8 @@ npm run deploy
 
 Ensure that the base property in vite.config.js and homepage property in package.json are correctly set to the repository name.
 
-## Authors and Acknowledgments
+### Authors and Acknowledgments
 
-### Author: Olesia Kubska
-### Acknowledgments: 
+#### Author: Olesia Kubska
+#### Acknowledgments: 
 This project was developed as part of the coursework for the second semester, integrating knowledge from various topics covered during the semester.
