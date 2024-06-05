@@ -1,96 +1,122 @@
-# PS 11 - 16.06.2024 Zadanie zaliczeniowe (sem2) - "Zakupownik "Online" "
+# Online Shopper
 
-Maksymalna ilość punktów: 5
+## Project Description
 
-Punkty  | Ocena
-------------- | -------------
-3  | 3
-3.5  | 3.5
-4  | 4
-4.5  | 4.5
-5  | 5
+Online Shopper is a web application designed to manage a shopping list. It integrates with a provided API to fetch and manage products. The application includes functionalities for viewing products, adding/removing them from a shopping list, filtering products, and user authentication (login and registration).
 
+## Features
 
-# Uruchomienie
+- **Product List**: Fetch and display a list of products from the API.
+- **Shopping List Management**: Add and remove products from a shopping list.
+- **Product Filtering**: Filter products based on various criteria.
+- **User Authentication**: Register and log in users, maintaining session state using localStorage.
+- **Protected Routes**: Ensure certain routes are accessible only to authenticated users.
 
-Instalacja productsApi - `npm install - wewnątrz folderu API`
+## Installation and Setup
 
-Uruchomienie productsApi - `npm run start - wewnątrz folderu API`
+1. **Install the products API**:
+    ```bash
+    cd API
+    npm install
+    ```
 
-Uruchomienie gównej aplikacji - `npm install / npm run dev`
+2. **Run the products API**:
+    ```bash
+    npm run start
+    ```
 
-# Uwagi dotyczące zaliczenia
+3. **Install the main application**:
+    ```bash
+    cd ../
+    npm install
+    ```
 
-Zadanie 1 jest zadaniem obowiązkowym i jego zrobienie w całości gwarantuje zaliczenie na minimalną ocenę.
-Pozostałe zadania są opcjonalne i można je wykonywać niezależnie w celu podniesienia ilości punktów do zaliczenia
+4. **Run the main application**:
+    ```bash
+    npm run dev
+    ```
 
-Dokumentacja API (swagger) będzie dostępny pod http://localhost:4000/swagger po uruchomieniu aplikacji API
+## API Documentation
 
-**Uwaga:** Wszystkie zapytania z API zwracają / modyfikują dane po czasie 3-ch sekund, zatem w czasie wykonywania operacji należy pokazać dla użytkownika stosowny komunikat (np LinearProgress z biblioteki material UI używany na zajęciach https://mui.com/material-ui/react-progress/#linear-indeterminate)
+The API documentation (Swagger) is available at `http://localhost:4000/swagger` after starting the API.
 
-# Zadanie 1 (3 pkt) - Product list - API Integration / React Context
+**Note**: All API requests modify or return data after a delay of 3 seconds. During operations, a relevant message is shown to the user (e.g., using `LinearProgress` from Material UI: https://mui.com/material-ui/react-progress/#linear-indeterminate).
 
-Adresy API:
-- pobieranie listy produktów GET - http://localhost:4000/api/productsList
+## Detailed Features
 
-- Po wciśnięciu przycisku "Załaduj", pobierz listę produktów z api, zapisz ją w **React Context**, następnie odczytaj  i wyświetl na ekranie w lewej kolumnie (nienumerowana lista samych nazwami nazw) - komponent ProductsList
+### Product List
 
-- Kliknięcie na przycisk powinno wywołać zapytanie od API, wyniki zwrócone z zapytania powinny zostać zapisane w R.context, a następnie wyświetlone w komponencie productsList.
+- **API Endpoint**: `GET http://localhost:4000/api/productsList`
+- **Functionality**: 
+  - On pressing the "Load" button, fetch the list of products from the API, save it in React Context, and display it in the left column.
+  - Clicking the button triggers the API call, stores the results in React Context, and displays them in the `ProductsList` component.
 
-# Zadanie 2 (0.5 pkt) - Shopping list Add / Remove Product
+### Shopping List Management
 
-Adresy API
-- pobieranie listy zakupów - GET http://localhost:4000/api/shoppingList
-- dodawanie produktu do listy zakupowej - POST http://localhost:4000/api/shoppingList - jako request body wysyłamy cały produkt (obiekt)
-- usuwanie elementu z listy zakupowej DEL - http://localhost:4000/api/shoppingList/:id
+- **API Endpoints**:
+  - Fetch shopping list: `GET http://localhost:4000/api/shoppingList`
+  - Add product to shopping list: `POST http://localhost:4000/api/shoppingList`
+  - Remove product from shopping list: `DELETE http://localhost:4000/api/shoppingList/:id`
+- **Functionality**:
+  - Clicking on a product in the `ProductsList` component adds it to the shopping list.
+  - Clicking on a product in the `ShoppingList` component removes it from the shopping list.
 
-- Kliknięcie lewym przyciskiem myszy na produkt z komponentu ProductsList (lewa kolumna) powinno dodać go do listy zakupowej (shoppingList)
-	- kliknięcie powinno wywołać 2 zapytania API tj. dodanie do listy shoppingList oraz wczytanie tej listy
+### Product Filtering
 
-- Kliknięcie lewym przyciskiem myszy w ShoppingList (prawa kolumna) powinno usunąć produkt z listy zakupowej
-	- w tym przypadku możemy wywołać 2 lub tyko 1 zapytanie (**podpowiedź:** metoda DELETE zwraca usuwany obiekt)
+- **Functionality**: 
+  - Use form elements to filter products in the left column. The filtering is done inside React Context.
+  - A method in React Context is created for filtering products, invoked in the Header, and the state change is visible in the `ProductsList` component.
 
-Spawdzenie zadania:
-- dodaj 3 różne produkty do shopping list
-- odśwież stronę
-	- lista shopping list powinna zawierać dodane elementy
+### User Authentication
 
-# Zadanie 3 (0.5 pkt) - Filtrowanie w React Context
+- **Login and Registration**:
+  - **Forms**: Implemented using Formik for form handling and validation.
+  - **Local Storage**: User session is managed using localStorage.
 
-Użyj elementów formularza z sekcji "Filters" aby filtrować produkty [lewa kolumna] (takie same filtrowanie jak w zadaniu zaliczeniowym sem.1) z tą różnicą, że filtrowanie powinno się odbywać wewnątrz ReactContext.
-**Podpowiedź:** Utwórz w R.Context metodę która będzie miała za zadanie filtrowanie produktów, wywołasz tą metodę w Header, a zmiana stanu będzie widoczna w ProductsList
+#### Login
 
-# Zadanie 4a (0.5 pkt) - Logowanie - Prodected Route
+- **Route**: `/signIn`
+- **Functionality**: 
+  - Displays a login form.
+  - On successful login, the user is redirected to the dashboard.
+  - The logged-in user's name is displayed in the Header.
+  - Includes a logout button that clears the session and redirects to the login screen.
+  - If the user is not logged in, accessing the dashboard route redirects to the login screen.
 
-Nowy routing: localhost:3000/signIn
+#### Registration
 
-Na wyżej wymienionej stronie powinien znajdować się formularz logowania (podobnie jak to było na zajęciach), zalogowanie użytkownika powinno polegać na dodaniu go do localStorage co będzie reprezentowało sesję użytkownika:
-- po zalogowaniu użytkownik zostaje przeniesiony na dashboard (widok z zadań 1-3)
-- imie zalogowanego użytkownika powinno zostać wypisane w Headerz'e w formie "Jesteś zalogowany jako ..."
-- Header powinien zawierać przycisk wyloguj, który wyczyści sesję i przeniesie użytkownika do ekranu logowania
-- jeżeli użytkownik nie jest zalogowany wpisanie do pasku adresu url "http://localhost:3000/dashboard" powinno przenieść użytkownika na stronę logowania
+- **Route**: `/signOut`
+- **Functionality**:
+  - Displays a registration form.
+  - On successful registration, the user is added to `availableUsers` in localStorage and automatically logged in.
+  - Only users in `availableUsers` can log in; others see an error message.
 
-Sprawdzenie zadania:
-- Logujemy się dowolnymi danymi
-- przenosimy się na dashboard i widzimy imie w Headerze
-- wylogowujemy się
-- próbujemy wpisać http://localhost:3000/dashboard - zostajemy przeniesieni do logowania
+### Protected Routes
 
-# Zadanie 4b (0.5 pkt) - Rejestracja -
+- **Functionality**: Certain routes (like the dashboard) are accessible only to authenticated users. Unauthenticated users are redirected to the login screen.
 
-Nowy routing: localhost:3000/signOut
+## Development Tools and Technologies
 
-Pod nowym adresem url powinien być widoczny ten  sam komponent (formularz), co w zadaniu 4, ale z przyciskiem "Zarejestruj i zaloguj" oraz przyciskiem "Przejdź do logowania".
-Zarejestrowanie użytkownika polega na:
-- dodaniu nowego użytkownika do listy availableUsers zapisanej w l.storage
-- automatycznym zalogowaniu użytkownika (tak jak w zadaniu 4)
+- **React**: JavaScript library for building user interfaces.
+- **Formik**: For form handling and validation.
+- **Yup**: For schema validation.
+- **Material UI**: For UI components and styling.
+- **Axios**: For making API requests.
+- **React Router**: For routing.
+- **Vite**: Build tool for faster development.
 
-Dodatkowo tylko użytkownicy, którzy są dodani do availableUsers w l.storage mogą zalogować się w standardowy sposób, w innym wypadku dostają komunikat o braku użytkownika w systemie.
+## Deployment
 
-Sprawdzenie zadania:
-- czyścimy l.storage
-- rejestrujemy użytkownika, zostajemy przeniesiesi na dashboard, widzimy imie
-- wylogowujemy się
-- próbujemy się zalogować na innego użytkownika, który nie istnieje lub podajemy złe hasło, widzimy błąd - można wyśwletlić dowolny tekst lub użyć https://mui.com/material-ui/react-snackbar/ z materialUI
-- logujemy się na użytkownika którego zarejestrowaliśmy, przechodzimy do dashboard
-- odświeżamy strone i pozostajemy zalogowani
+The application is deployed using GitHub Pages. To deploy, run:
+
+```bash
+npm run deploy
+ ```
+
+Ensure that the base property in vite.config.js and homepage property in package.json are correctly set to the repository name.
+
+## Authors and Acknowledgments
+
+### Author: Olesia Kubska
+### Acknowledgments: 
+This project was developed as part of the coursework for the second semester, integrating knowledge from various topics covered during the semester.
