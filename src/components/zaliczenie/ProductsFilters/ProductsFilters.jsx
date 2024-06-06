@@ -22,12 +22,6 @@ const ProductsFilters = () => {
   setIsFoodOnly(false);
  };
 
- //  const handleFilterChange = (e) => {
- //   const value = e.target.value;
- //   setFilter(value);
- //   filterProducts(value);
- //  };
-
  return (
   <div className="Wrapper">
    <h3>Products Filters</h3>

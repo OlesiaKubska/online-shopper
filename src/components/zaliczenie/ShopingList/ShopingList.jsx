@@ -44,7 +44,7 @@ const ShopingList = () => {
     <p>Shoping List</p>
     {loading === "loading" ? (
      <p>
-      <LinearProgress />
+      <LinearProgress style={{ width: "100px" }} />
      </p>
     ) : (
      <ul>

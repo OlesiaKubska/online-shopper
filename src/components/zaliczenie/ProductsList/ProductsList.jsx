@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { ProductsContext } from "../../../context/productsContext";
-import LinearProgress from "@mui/material/LinearProgress";
+import { LinearProgress } from "@mui/material";
 import axios from "axios";
 import "../commonStyles.css";
 
@@ -18,6 +18,7 @@ const ProductsList = () => {
    setProductsList([]);
    setFilteredProductsList([]);
    setLoading("loading");
+
    const productsFromApi = await axios.get(
     "http://localhost:4000/api/productsList"
    );
@@ -34,7 +35,8 @@ const ProductsList = () => {
  const addProductToShoppingList = async (product) => {
   try {
    await axios.post("http://localhost:4000/api/shoppingList", product);
-   setShoppingList((prevList) => [...prevList, product]);
+   const response = await axios.get("http://localhost:4000/api/shoppingList");
+   setShoppingList(response.data);
   } catch (error) {
    console.error("Error adding product to shopping list:", error);
   }
@@ -47,7 +49,7 @@ const ProductsList = () => {
     <button onClick={loadProductsListFromApi}>Load</button>
     {loading === "loading" ? (
      <p>
-      <LinearProgress />
+      <LinearProgress style={{ width: "100px" }} />
      </p>
     ) : (
      <ul>
